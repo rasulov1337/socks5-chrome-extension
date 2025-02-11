@@ -9,6 +9,10 @@
         "service_worker": "sw.js"
     },
     "action": {
-        "default_popup": "popup.html"
+        "default_popup": "popup.html",
+        "default_icon": "logo.png"
+    },
+    "icons": {
+        "501": "logo.png"
     }
 }
