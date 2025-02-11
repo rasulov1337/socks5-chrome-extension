@@ -1,7 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const destinationInputEl = document.getElementById("destinationInput");
     const addressInputEl = document.getElementById("addressInput");
     const addressListEl = document.getElementById("addressList");
     const addButton = document.getElementById("saveAddresses");
+    const saveDestinationButton = document.getElementById(
+        "saveDestinationButton"
+    );
     const template = document.getElementById("addressEntryTemplate");
 
     let addressList = [];
@@ -15,27 +19,36 @@ document.addEventListener("DOMContentLoaded", () => {
     const refreshAddressList = () => {
         addressListEl.replaceChildren();
 
-        chrome.storage.local.get(["addressList", "proxyEnabled"], (result) => {
-            if (result.addressList) {
-                addressList = result.addressList;
+        chrome.storage.local.get(
+            ["addressList", "proxyEnabled", "proxyDestination"],
+            (result) => {
+                // Destination address
+                if (result.proxyDestination) {
+                    destinationInputEl.value = result.proxyDestination;
+                }
 
-                result.addressList.forEach((address) => {
-                    const entryEl = template.content.cloneNode(true);
-                    entryEl.querySelector(
-                        ".address-entry__address"
-                    ).textContent = address;
-                    const crossButton = entryEl.querySelector(
-                        ".address-entry__cross"
-                    );
-                    crossButton.onclick = handleDelete;
-                    crossButton.dataset.address = address;
+                // Address list
+                if (result.addressList) {
+                    addressList = result.addressList;
 
-                    addressListEl.appendChild(entryEl);
-                });
-            } else {
-                addressListEl.textContent = "Nothing here yet";
+                    result.addressList.forEach((address) => {
+                        const entryEl = template.content.cloneNode(true);
+                        entryEl.querySelector(
+                            ".address-entry__address"
+                        ).textContent = address;
+                        const crossButton = entryEl.querySelector(
+                            ".address-entry__cross"
+                        );
+                        crossButton.onclick = handleDelete;
+                        crossButton.dataset.address = address;
+
+                        addressListEl.appendChild(entryEl);
+                    });
+                } else {
+                    addressListEl.textContent = "Nothing here yet";
+                }
             }
-        });
+        );
     };
 
     const handleDelete = (e) => {
@@ -59,6 +72,22 @@ document.addEventListener("DOMContentLoaded", () => {
         refreshAddressList();
     };
 
+    const handleSaveDestination = () => {
+        const value = destinationInputEl.value.trim();
+
+        if (!value) {
+            alert("Destination can't be empty");
+            return;
+        }
+
+        chrome.storage.local.set(
+            { proxyDestination: destinationInputEl.value },
+            () => {
+                console.log("Proxy address saved");
+            }
+        );
+    };
+
     chrome.runtime.sendMessage({ action: "enableProxy" }, (response) => {
         chrome.storage.local.set({ proxyEnabled: true }, () => {
             console.log("Proxy enabled");
@@ -66,5 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     addButton.onclick = handleAdd;
+    saveDestinationButton.onclick = handleSaveDestination;
     refreshAddressList();
 });

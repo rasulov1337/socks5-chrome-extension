@@ -18,7 +18,7 @@
     box-sizing: border-box;
 }
 
-.address-input {
+.input {
     font-family: Inter;
     font-size: 16px;
     line-height: 1.6;
@@ -31,9 +31,13 @@
     margin: 0 0 5px;
 }
 
-.address-input::placeholder {
+.input::placeholder {
     color: var(--placeholder-color);
     font-size: 14px;
+}
+
+.input-label {
+    font-size: 17px;
 }
 
 .body {
@@ -86,7 +90,7 @@
     flex-direction: column;
     gap: 5px;
     overflow-y: auto;
-    height: 300px;
+    max-height: 200px;
     scrollbar-width: thin;
 }
 

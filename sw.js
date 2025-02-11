@@ -1,38 +1,44 @@
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "enableProxy") {
-        chrome.storage.local.get("addressList", (result) => {
-            let addresses = result.addressList || [];
+        chrome.storage.local.get(
+            "addressList",
+            "proxyDestination",
+            (result) => {
+                if (!result.addressList || !result.proxyDestination) return;
 
-            const patternsJSON = JSON.stringify(addresses);
+                let addresses = result.addressList || [];
 
-            // PAC script
-            const pacScriptData = `
+                const patternsJSON = JSON.stringify(addresses);
+
+                // PAC script
+                const pacScriptData = `
           function FindProxyForURL(url, host) {
             var patterns = ${patternsJSON};
             for (var i = 0; i < patterns.length; i++) {
               if (shExpMatch(host, patterns[i])) {
-                return "SOCKS5 192.168.1.72:8888; DIRECT";
+                return "SOCKS5 ${result.proxyDestination}; DIRECT";
               }
             }
             return "DIRECT";
           }
         `;
 
-            const config = {
-                mode: "pac_script",
-                pacScript: {
-                    data: pacScriptData,
-                },
-            };
+                const config = {
+                    mode: "pac_script",
+                    pacScript: {
+                        data: pacScriptData,
+                    },
+                };
 
-            chrome.proxy.settings.set(
-                { value: config, scope: "regular" },
-                function () {
-                    console.log("Proxy enabled");
-                    sendResponse({ status: "enabled" });
-                }
-            );
-        });
+                chrome.proxy.settings.set(
+                    { value: config, scope: "regular" },
+                    function () {
+                        console.log("Proxy enabled");
+                        sendResponse({ status: "enabled" });
+                    }
+                );
+            }
+        );
 
         return true;
     } else if (message.action === "disableProxy") {

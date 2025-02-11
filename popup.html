@@ -15,13 +15,18 @@
     </head>
     <body class="background">
         <h1 class="project-name">Simple proxy</h1>
+
+        <label class="input-label">Proxy destination IP</label>
+        <input type="text" class="input" id="destinationInput" placeholder="Ex.: 127.0.0.1:8000">
+        <button class="button" id="saveDestinationButton">Save</button>
+        <hr />
+
+        <label class="input-label">Domain to add</label>
         <input type="text"
-            class="address-input"
+            class="input"
             id="addressInput"
-            rows="6"
             placeholder="Example: *.example.com"
         ></input>
-        <br />
         <button class="button" id="saveAddresses">Add</button>
         <hr />
         <ul id="addressList" class="address-list">
