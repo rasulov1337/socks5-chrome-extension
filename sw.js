@@ -1,8 +1,7 @@
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "enableProxy") {
         chrome.storage.local.get(
-            "addressList",
-            "proxyDestination",
+            ["addressList", "proxyDestination"],
             (result) => {
                 if (!result.addressList || !result.proxyDestination) return;
 
