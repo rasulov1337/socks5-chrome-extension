@@ -1,0 +1,14 @@
+{
+    "manifest_version": 3,
+    "name": "Simple SOCKS5 proxy",
+    "version": "1.0",
+    "description": "Simple SOCKS5 proxy extension.",
+    "permissions": ["proxy", "tabs", "activeTab", "storage"],
+    "host_permissions": ["<all_urls>"],
+    "background": {
+        "service_worker": "sw.js"
+    },
+    "action": {
+        "default_popup": "popup.html"
+    }
+}

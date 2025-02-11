@@ -1,0 +1,31 @@
+<template id="addressEntryTemplate">
+    <li class="address-entry" data-address="">
+        <p class="address-entry__address"></p>
+        <button class="address-entry__cross" data-address="">x</button>
+    </li>
+</template>
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Simple SOCKS5 Proxy</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="popup.css" />
+    </head>
+    <body class="background">
+        <h1 class="project-name">Simple proxy</h1>
+        <input type="text"
+            class="address-input"
+            id="addressInput"
+            rows="6"
+            placeholder="Example: *.example.com"
+        ></input>
+        <br />
+        <button class="button" id="saveAddresses">Add</button>
+        <hr />
+        <ul id="addressList" class="address-list">
+        </ul>
+        <script src="popup.js"></script>
+    </body>
+</html>

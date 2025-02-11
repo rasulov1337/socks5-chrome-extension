@@ -1,0 +1,113 @@
+@font-face {
+    font-family: Inter;
+    src: url("./fonts/Inter.ttf");
+}
+
+:root {
+    font-family: Inter;
+    --text-color: #d2dae2;
+    --placeholder-color: #485460;
+    --background-color: #1e272e;
+
+    color: var(--text-color);
+
+    scrollbar-color: #3e4953 var(--text-color);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.address-input {
+    font-family: Inter;
+    font-size: 16px;
+    line-height: 1.6;
+    width: 100%;
+    background-color: #758694;
+    color: var(--text-color);
+
+    padding: 4px;
+    border-radius: 4px;
+    margin: 0 0 5px;
+}
+
+.address-input::placeholder {
+    color: var(--placeholder-color);
+    font-size: 14px;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.project-name {
+    font-size: 20px;
+}
+
+.info-title {
+    font-size: 15px;
+    margin: 0 0 2px 0;
+}
+
+.background {
+    width: 200px;
+    background-color: var(--background-color);
+}
+
+.button {
+    border: none;
+    background: #485460;
+    color: #d2dae2;
+    width: 100%;
+    height: 30px;
+    border-radius: 14px;
+    padding: 5px 10px;
+    border: 0 0 #000;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.button:hover {
+    background: #3e4953;
+    color: #bbc2c9;
+}
+
+.button:active {
+    transform: translateY(1px);
+}
+
+.address-list {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    overflow-y: auto;
+    height: 300px;
+    scrollbar-width: thin;
+}
+
+.address-entry {
+    position: relative;
+    width: 100%;
+    height: 30px;
+    background-color: #3e4953;
+    border-radius: 4px;
+    margin: 0;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.address-entry__cross {
+    border: none;
+    background: none;
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    color: #1e272e;
+}
